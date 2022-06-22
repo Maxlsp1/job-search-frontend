@@ -34,13 +34,39 @@ html, body, #root, #root>div {
     }
 }
 
-.CardStyle{
+.LoginStyle{
+
+    text-align: center;
 
     @media(min-width: 768px){
-        margin-left: 10rem !important;
-        margin-right: 10rem !important;
+      margin-top: 8rem;
     }
+
+    hr {
+      border: none;
+      margin-top: 3rem;
+      border-top: 3px double #000;
+      color: #000;
+      overflow: visible;
+      text-align: center;
+      height: 5px;
+    }
+  
+    hr:after {
+      background: #fff;
+      content: 'Déjà membre ?';
+      padding: 0 4px;
+      position: relative;
+      top: -13px;
+    }
+
+    // @media(min-width: 768px){
+    //     margin-left: 1rem !important;
+    //     margin-right: 1rem !important;
+    // }
 }
+
+
 
 .HomeImage{
     width: 10rem !important;

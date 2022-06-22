@@ -6,26 +6,23 @@ function Login() {
     return(
       <Container fluid className="ContainerStyle">
         <Row className="h-100 RowStyle">
-          <Col className="d-flex flex-column align-items-center justify-content-center ColumnStyle">
+
+          <Col className="d-flex flex-column align-items-center justify-content-center col-xs-4 col-md-8 ColumnStyle">
+
             <Image src="logo512.png" className="HomeImage"/>
             <h1>Job Search</h1>
+
           </Col>
-          <Col className="align-self-center">
-            <Card  className="CardStyle">
-              <Card.Body>
-                <Stack gap={2} className="col-md-5 mx-auto">
 
-                  <Button variant="secondary">
-                    Se connecter
-                  </Button>
+          <Col className="col-xs-8 col-md-4 align-self-center LoginStyle">
 
-                  <Button variant="primary">
-                    S'inscrire
-                  </Button>
-
-                </Stack>
-              </Card.Body>
-            </Card>
+            <Button variant="primary">
+              S'inscrire
+            </Button>
+            <hr/>
+            <Button variant="secondary">
+              Se connecter
+            </Button>
 
           </Col>
         </Row>
