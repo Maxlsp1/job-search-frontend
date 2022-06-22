@@ -1,32 +1,31 @@
 import * as React from "react";
-import { Image, Row, Col, Container, Button, Stack } from "react-bootstrap";
+import { Image, Row, Col, Container, Button, Stack, Card } from "react-bootstrap";
 
 function Login() {
 
     return(
-      <Container>
-        <Row>
-          <Col className="d-flex flex-column align-items-center justify-content-center">
-            <Image src="logo512.png" shape="round" responsive/>
+      <Container fluid className="ContainerStyle">
+        <Row className="h-100 RowStyle">
+          <Col className="d-flex flex-column align-items-center justify-content-center ColumnStyle">
+            <Image src="logo512.png" className="HomeImage"/>
             <h1>Job Search</h1>
           </Col>
           <Col className="align-self-center">
+            <Card  className="CardStyle">
+              <Card.Body>
+                <Stack gap={2} className="col-md-5 mx-auto">
 
-            <Stack gap={2} className="col-md-5 mx-auto">
+                  <Button variant="secondary">
+                    Se connecter
+                  </Button>
 
-              <Button variant="primary">
-                S'inscrire
-              </Button>
+                  <Button variant="primary">
+                    S'inscrire
+                  </Button>
 
-              <Button variant="outline-dark">
-                s'inscrire avec google
-              </Button>
-
-              <Button variant="secondary">
-                Se connecter
-              </Button>
-
-            </Stack>
+                </Stack>
+              </Card.Body>
+            </Card>
 
           </Col>
         </Row>

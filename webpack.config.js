@@ -2,9 +2,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const Dotenv = require( 'dotenv-webpack' );
 const { InjectManifest } = require( 'workbox-webpack-plugin' );
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fs = require("fs");
-
 const CopyPlugin = require("copy-webpack-plugin");
+
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
 
@@ -43,8 +46,19 @@ module.exports = {
                 use: "babel-loader",
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                test: /\.(scss|css)$/,
+                use: [
+                  process.env.NODE_ENV !== 'production'
+                    ? 'style-loader'
+                    : MiniCssExtractPlugin.loader,
+                  'css-loader',
+                  {
+                    loader: 'sass-loader',
+                    options: {
+                      sourceMap: true
+                    }
+                  }
+                ]
             },
         ],
     },
@@ -70,7 +84,14 @@ module.exports = {
         new InjectManifest({
             swSrc: "./src/sw.js",
             swDest: "sw.js"
-        })
+        }),
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].css'
+          }),
     ]
 
 };

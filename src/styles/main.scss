@@ -1,0 +1,52 @@
+//whole page
+html, body, #root, #root>div {
+    height: 100%
+}
+
+//Login.js
+
+.ContainerStyle {
+    @media(min-width: 768px){
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+    }
+}
+
+.ColumnStyle{
+
+    @media(min-width: 768px){
+
+        background-image:
+            
+        linear-gradient(to right, rgba(255,0,0,0) 98%, #fff 99%),
+        url("/public/black-brick-wall-background.jpg");
+        background-repeat: no-repeat;
+        color: white;
+        
+    }
+}
+
+.RowStyle{
+    @media(max-width: 767.98px){
+        display: flex;
+        flex-direction: column;   
+    }
+}
+
+.CardStyle{
+
+    @media(min-width: 768px){
+        margin-left: 10rem !important;
+        margin-right: 10rem !important;
+    }
+}
+
+.HomeImage{
+    width: 10rem !important;
+
+    @media(min-width: 768px){
+        width: 20rem !important;
+    }
+}
