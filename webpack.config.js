@@ -18,6 +18,7 @@ module.exports = {
         publicPath: '/'
     },
     devServer: {
+        allowedHosts: ['job-search-dev.nip.io', '.job-search-dev.nip.io'],
         port: 5000,
         server: {
             type: "https",
