@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
-import { Image, Row, Col, Container, Button, Stack, Card } from "react-bootstrap";
+import { Image, Row, Col, Container, Button, Stack } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
+import Signin from "../components/Login/Signin";
 
 const clientId = "685903966367-oojitfc8lpf1qdrv3isfed7o9up0oikh.apps.googleusercontent.com";
 
 function Login() {
+
+    const [showSignIn, setShowSignIn] = useState(false);
 
     useEffect(() =>{
 
@@ -30,6 +33,10 @@ function Login() {
 
     return(
       <Container fluid className="ContainerStyle">
+        <Signin
+          show={showSignIn}
+          onHide={() => setShowSignIn(false)}
+        />
         <Row className="h-100 RowStyle">
 
           <Col className="d-flex flex-column align-items-center justify-content-center col-xs-4 col-md-8 ColumnStyle">
@@ -41,9 +48,12 @@ function Login() {
 
           <Col className="col-xs-8 col-md-4 align-self-center LoginStyle">
 
-            <Stack gap={2} className="col-md-5 mx-auto">
+            <Stack gap={2} className="col-8 x-auto col-md-5 mx-auto">
 
-              <Button variant="primary">
+              <Button 
+                variant="primary"
+                onClick={() => setShowSignIn(true)}
+              >
                 S'inscrire
               </Button>
 
@@ -57,8 +67,8 @@ function Login() {
               />
 
             </Stack>
-            <hr/>
-            <Button variant="secondary">
+            <h5 className="DividerStyle"><span>Déjà membre ?</span></h5>
+            <Button variant="secondary"  className="col-8 x-auto col-md-5 mx-auto">
               Se connecter
             </Button>
 

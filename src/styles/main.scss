@@ -41,32 +41,21 @@ html, body, #root, #root>div {
     @media(min-width: 768px){
       margin-top: 8rem;
     }
-
-    hr {
-      border: none;
-      margin-top: 3rem;
-      border-top: 3px double #000;
-      color: #000;
-      overflow: visible;
-      text-align: center;
-      height: 5px;
-    }
-  
-    hr:after {
-      background: #fff;
-      content: 'Déjà membre ?';
-      padding: 0 4px;
-      position: relative;
-      top: -13px;
-    }
-
-    // @media(min-width: 768px){
-    //     margin-left: 1rem !important;
-    //     margin-right: 1rem !important;
-    // }
 }
 
+.DividerStyle {
 
+    width: 100%; 
+    text-align: center; 
+    border-bottom: 1px solid #000; 
+    line-height: 0.1em;
+    margin: 3rem 0 2rem; 
+
+    span { 
+        background:#fff; 
+        padding:0 10px; 
+    }
+}
 
 .HomeImage{
     width: 10rem !important;
