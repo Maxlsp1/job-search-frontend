@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
 import { Image, Row, Col, Container, Button, Stack } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
-import Signin from "../components/Login/Signin";
+import SignUp from "../components/Login/SignUp";
+import SignIn from "../components/Login/SignIn";
 
 const clientId = "685903966367-oojitfc8lpf1qdrv3isfed7o9up0oikh.apps.googleusercontent.com";
 
 function Login() {
 
+    const [showSignUp, setShowSignUp] = useState(false);
     const [showSignIn, setShowSignIn] = useState(false);
+
 
     useEffect(() =>{
 
@@ -33,7 +36,11 @@ function Login() {
 
     return(
       <Container fluid className="ContainerStyle">
-        <Signin
+        <SignUp
+          show={showSignUp}
+          onHide={() => setShowSignUp(false)}
+        />
+        <SignIn
           show={showSignIn}
           onHide={() => setShowSignIn(false)}
         />
@@ -52,7 +59,7 @@ function Login() {
 
               <Button 
                 variant="primary"
-                onClick={() => setShowSignIn(true)}
+                onClick={() => setShowSignUp(true)}
               >
                 S'inscrire
               </Button>
@@ -68,7 +75,11 @@ function Login() {
 
             </Stack>
             <h5 className="DividerStyle"><span>Déjà membre ?</span></h5>
-            <Button variant="secondary"  className="col-8 x-auto col-md-5 mx-auto">
+            <Button 
+              onClick={() => setShowSignIn(true)}
+              variant="secondary"  
+              className="col-8 x-auto col-md-5 mx-auto"
+            >
               Se connecter
             </Button>
 

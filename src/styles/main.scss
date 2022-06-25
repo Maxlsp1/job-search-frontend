@@ -47,7 +47,20 @@ html, body, #root, #root>div {
 
     width: 100%; 
     text-align: center; 
-    border-bottom: 1px solid #000; 
+    // border-bottom: 1px solid #000;
+    background: /* gradient can be an image */
+    linear-gradient(
+      to left, 
+      rgba(255,255,255,255) 0%,
+      rgba(0,0,0,1) 47%,
+      rgba(0,0,0,1) 12%,
+      rgba(255,255,255,255) 100%
+    )
+    left 
+    bottom
+    #777    
+    no-repeat; 
+    background-size:100% 5px ;
     line-height: 0.1em;
     margin: 3rem 0 2rem; 
 

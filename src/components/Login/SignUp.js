@@ -3,12 +3,15 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 
-const SignIn = (props) =>{
+const SignUp = (props) =>{
 
   const [pwdIcon, setPwdIcon] = useState("bi bi-eye-fill");
   const [pwdInput, setPwdInput] = useState("password");
 
   const schema = yup.object().shape({
+    last_name: yup.string().required("veuillez saisir votre nom !"),
+    
+    first_name: yup.string().required("veuillez saisir votre prénom !"),
 
     email: yup.string()
     .email("l'adresse mail n'est pas valide !")
@@ -50,7 +53,7 @@ const SignIn = (props) =>{
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Authentification
+          Inscription
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -58,6 +61,8 @@ const SignIn = (props) =>{
           validationSchema={schema}
           onSubmit={(values) => console.log(values)}
           initialValues={{
+            last_name: '',
+            first_name: '',
             email: '',
             pwd: ''
           }}
@@ -75,6 +80,37 @@ const SignIn = (props) =>{
           }) =>(
 
             <Form noValidate onSubmit={handleSubmit}>
+
+              <Form.Group className="mb-3" controlId="formBasicLastName">
+                <Form.Label>Nom</Form.Label>
+                <Form.Control
+                  type="text" 
+                  name="last_name"
+                  value={values.last_name}
+                  onChange={handleChange}
+                  isInvalid={!!errors.last_name}
+                />
+    
+                <Form.Control.Feedback type="invalid">
+                  {errors.last_name}
+                </Form.Control.Feedback>
+              </Form.Group>
+    
+              <Form.Group className="mb-3" controlId="formBasiFirstName">
+                <Form.Label>Prénom</Form.Label>
+                <Form.Control
+                  required 
+                  type="text" 
+                  name="first_name"
+                  value={values.first_name}
+                  onChange={handleChange}
+                  isInvalid={!!errors.first_name}
+                />
+    
+                <Form.Control.Feedback type="invalid">
+                  {errors.first_name}
+                </Form.Control.Feedback>
+              </Form.Group>
     
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
@@ -125,9 +161,8 @@ const SignIn = (props) =>{
                   </Form.Control.Feedback>
                 </InputGroup>
               </Form.Group>
-
     
-              <Button type="submit">Envoyer</Button>
+              <Button type="submit">Enregistrer</Button>
             </Form>
 
           )
@@ -140,4 +175,4 @@ const SignIn = (props) =>{
   )
 }
 
-export default SignIn
+export default SignUp
