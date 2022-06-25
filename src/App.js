@@ -10,8 +10,8 @@ import { hot } from "react-hot-loader";
 
 const App = () => {
 
-  useEffect(() =>{
-
+  useEffect( async() =>{
+    await screen.orientation.lock("portrait");
     var sw = serviceWorker.register();
     serviceWorker.checkUpdate(sw)
 
