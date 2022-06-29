@@ -22,7 +22,7 @@ function Login() {
         })
       }
       gapi.load('client:auth2', init)
-    })
+    }, [])
 
     const onSuccess = (res) =>{
 
@@ -45,7 +45,6 @@ function Login() {
           onHide={() => setShowSignIn(false)}
         />
         <Row className="h-100 RowStyle">
-
           <Col className="d-flex flex-column align-items-center justify-content-center col-xs-4 col-md-8 ColumnStyle">
 
             <Image src="logo512.png" className="HomeImage"/>

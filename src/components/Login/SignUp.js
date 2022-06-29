@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../store/reducers/user";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 
 const SignUp = (props) =>{
 
   const [pwdIcon, setPwdIcon] = useState("bi bi-eye-fill");
   const [pwdInput, setPwdInput] = useState("password");
+  const dispatch = useDispatch()
 
   const schema = yup.object().shape({
     last_name: yup.string().required("veuillez saisir votre nom !"),
@@ -59,7 +62,9 @@ const SignUp = (props) =>{
       <Modal.Body>
         <Formik
           validationSchema={schema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => {
+            dispatch(signUp(values))
+          }}
           initialValues={{
             last_name: '',
             first_name: '',
@@ -154,7 +159,7 @@ const SignUp = (props) =>{
                       }
                     }}
                   >
-                    <i class={pwdIcon}></i>
+                    <i className={pwdIcon}></i>
                   </Button>
                   <Form.Control.Feedback type="invalid">
                     {errors.pwd}

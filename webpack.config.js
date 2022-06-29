@@ -17,6 +17,7 @@ module.exports = {
         filename: 'index_bundle.js',
         publicPath: '/'
     },
+    devtool: "source-map",
     devServer: {
         allowedHosts: ['job-search-dev.nip.io', '.job-search-dev.nip.io'],
         port: 5000,
@@ -84,7 +85,8 @@ module.exports = {
         }),
         new InjectManifest({
             swSrc: "./src/sw.js",
-            swDest: "sw.js"
+            swDest: "sw.js",
+            maximumFileSizeToCacheInBytes : 500000000,
         }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({

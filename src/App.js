@@ -10,12 +10,12 @@ import { hot } from "react-hot-loader";
 
 const App = () => {
 
-  useEffect( async() =>{
-    await screen.orientation.lock("portrait");
+  useEffect(() =>{
+    screen.orientation.lock("portrait");
     var sw = serviceWorker.register();
     serviceWorker.checkUpdate(sw)
 
-  })
+  }, [])
 
     return(
       <Router>
