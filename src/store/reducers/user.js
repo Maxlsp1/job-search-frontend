@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import UserService from "../services/userService";
 
-const initialState = [];
+const initialState = {
+
+  user: {},
+  token: {},
+  authSuccess: false
+};
 
 export const signIn = createAsyncThunk(
   "user/signIn",
@@ -14,7 +19,6 @@ export const signIn = createAsyncThunk(
 export const signUp = createAsyncThunk(
   "user/signUp",
   async (data) => {
-    console.log('data sign up : ', data)
     const res = await UserService.signUp(data);
     return res.data;
   }
@@ -25,10 +29,22 @@ const userSlice = createSlice({
   initialState,
   extraReducers: {
     [signIn.fulfilled]: (state, action) => {
-      state.push(action.payload);
+      console.log('im in sign in')
+      return{
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        authSuccess: action.payload.authSuccess
+      }      
     },
     [signUp.fulfilled]: (state, action) => {
-      state.push(action.payload);
+      console.log('im in sign up')
+      return{
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        authSuccess: action.payload.authSuccess
+      }
     },
   },
 });

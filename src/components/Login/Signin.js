@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../../store/reducers/user";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 
 const SignIn = (props) =>{
 
   const [pwdIcon, setPwdIcon] = useState("bi bi-eye-fill");
   const [pwdInput, setPwdInput] = useState("password");
+
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user);
 
   const schema = yup.object().shape({
 
@@ -17,27 +22,7 @@ const SignIn = (props) =>{
     pwd: yup
     .string()
     .required("Veuillez saisir un mots de passe !")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Votre mdp doit contenir min 8 lettres, au moins une maj, un chhiffre et un caractère spéciale !"
-    ),
   });
-
-  // const handleSubmit = (event) => {
-    
-  //   console.log('pwd is valid : ', validatePassword(formValue.pwd))
-  //   event.preventDefault();
-  //   const form = event.currentTarget;
-
-  //   if (form.checkValidity() === false) {
-
-  //     event.stopPropagation();
-
-  //   }
-
-  //   setValidated(true);
-  //   console.log('form values : ',  formValue)
-  // };
 
   return(
 
@@ -56,7 +41,17 @@ const SignIn = (props) =>{
       <Modal.Body>
         <Formik
           validationSchema={schema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={async (values) => {
+            await dispatch(signIn(values))
+
+            if(user.authSuccess === true){
+
+              sessionStorage.setItem('user_data', JSON.stringify(user.user))
+              sessionStorage.setItem('user_token', user.token)
+              props.isauth(true)
+              
+            }
+          }}
           initialValues={{
             email: '',
             pwd: ''

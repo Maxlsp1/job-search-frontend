@@ -2,15 +2,25 @@
 import { clientsClaim, skipWaiting } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import {createHandlerBoundToURL} from 'workbox-precaching';
+import { NavigationRoute, registerRoute } from 'workbox-routing';
+import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
 import {CacheableResponsePlugin} from 'workbox-cacheable-response';
 
 clientsClaim();
 
 skipWaiting();
 
-precacheAndRoute(self.__WB_MANIFEST)
+precacheAndRoute([
+  {url: '/', revision: null}
+])
+
+const handler = createHandlerBoundToURL('/');
+const navigationRoute = new NavigationRoute(handler, {
+  allowlist: [new RegExp('/')],
+});
+
+// precacheAndRoute(self.__WB_MANIFEST)
 
 registerRoute(
   ({url}) => url.origin === 'https://fonts.googleapis.com',
@@ -35,19 +45,21 @@ registerRoute(
   })
 );
 
-// registerRoute(
-//   ({url}) => url.origin === 'https://api.themoviedb.org' &&
-//     url.pathname.startsWith('/3/discover/tv'),
-//   new StaleWhileRevalidate({
-//     cacheName: 'movie-api-response',
-//     plugins: [
-//       new CacheableResponsePlugin({
-//         statuses: [0, 200],
-//       }),
-//       new ExpirationPlugin({maxEntries: 1}), // Will cache maximum 1 requests.
-//     ]
-//   })
-// );
+registerRoute(
+
+  navigationRoute,
+
+  new NetworkFirst({
+    networkTimeoutSeconds: 10,
+    cacheName: 'pages',
+
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200]
+      })
+    ]
+  })
+)
 
 registerRoute(
   ({request}) => request.destination === 'image',

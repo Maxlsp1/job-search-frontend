@@ -7,15 +7,17 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 
-const rootPersistConfig = {
-   key: 'root',
-   storage,
- }
- 
 const userPersistConfig = {
    key: 'user',
    storage: storageSession,
+   blacklist: ['authSuccess']
 }
+
+const rootPersistConfig = {
+   key: 'root',
+   storage,
+   blacklist: ['user']
+ }
 
 const rootReducer = combineReducers({
    user: persistReducer(userPersistConfig, userReducer),

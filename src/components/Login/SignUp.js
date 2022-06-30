@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../store/reducers/user";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 
@@ -9,7 +9,9 @@ const SignUp = (props) =>{
 
   const [pwdIcon, setPwdIcon] = useState("bi bi-eye-fill");
   const [pwdInput, setPwdInput] = useState("password");
+
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user);
 
   const schema = yup.object().shape({
     last_name: yup.string().required("veuillez saisir votre nom !"),
@@ -29,22 +31,6 @@ const SignUp = (props) =>{
     ),
   });
 
-  // const handleSubmit = (event) => {
-    
-  //   console.log('pwd is valid : ', validatePassword(formValue.pwd))
-  //   event.preventDefault();
-  //   const form = event.currentTarget;
-
-  //   if (form.checkValidity() === false) {
-
-  //     event.stopPropagation();
-
-  //   }
-
-  //   setValidated(true);
-  //   console.log('form values : ',  formValue)
-  // };
-
   return(
 
     <Modal
@@ -62,8 +48,16 @@ const SignUp = (props) =>{
       <Modal.Body>
         <Formik
           validationSchema={schema}
-          onSubmit={(values) => {
-            dispatch(signUp(values))
+          onSubmit={async (values) => {
+            await dispatch(signUp(values))
+
+            if(user.authSuccess === true){
+
+              sessionStorage.setItem('user_data', JSON.stringify(user.user))
+              sessionStorage.setItem('user_token', user.token)
+              props.isauth(true)
+              
+            }
           }}
           initialValues={{
             last_name: '',

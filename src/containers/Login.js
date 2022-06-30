@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
 import { Image, Row, Col, Container, Button, Stack } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import SignUp from "../components/Login/SignUp";
 import SignIn from "../components/Login/SignIn";
@@ -11,7 +12,8 @@ function Login() {
 
     const [showSignUp, setShowSignUp] = useState(false);
     const [showSignIn, setShowSignIn] = useState(false);
-
+    const [authSuccess, setAuthSuccess] = useState(false);
+    let navigate = useNavigate();
 
     useEffect(() =>{
 
@@ -34,15 +36,21 @@ function Login() {
       console.log('Login failure : ', res)
     }
 
+    if(authSuccess === true){
+      return navigate('/home')
+    }
+
     return(
       <Container fluid className="ContainerStyle">
         <SignUp
           show={showSignUp}
           onHide={() => setShowSignUp(false)}
+          isauth={(auth) => setAuthSuccess(auth)}
         />
         <SignIn
           show={showSignIn}
           onHide={() => setShowSignIn(false)}
+          isauth={(auth) => setAuthSuccess(auth)}
         />
         <Row className="h-100 RowStyle">
           <Col className="d-flex flex-column align-items-center justify-content-center col-xs-4 col-md-8 ColumnStyle">
