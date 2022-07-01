@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { gapi } from "gapi-script";
 import { Image, Row, Col, Container, Button, Stack } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin, GoogleLogout  } from "react-google-login";
+import { useDispatch, useSelector } from "react-redux";
+import { googleAuth } from "../store/reducers/user";
+import { gapi } from 'gapi-script';
 import SignUp from "../components/Login/SignUp";
 import SignIn from "../components/Login/SignIn";
 
-const clientId = "685903966367-oojitfc8lpf1qdrv3isfed7o9up0oikh.apps.googleusercontent.com";
+const clientId = "685903966367-p4nn1bpkcisgenc4q26c3q7d0dfki1n0.apps.googleusercontent.com";
 
 function Login() {
 
     const [showSignUp, setShowSignUp] = useState(false);
     const [showSignIn, setShowSignIn] = useState(false);
     const [authSuccess, setAuthSuccess] = useState(false);
+
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user);  
+
     let navigate = useNavigate();
 
     useEffect(() =>{
@@ -26,14 +32,15 @@ function Login() {
       gapi.load('client:auth2', init)
     }, [])
 
-    const onSuccess = (res) =>{
+    const handleResponse = (googleData) =>{
 
-      console.log('Login success ! Current user : ', res.profileObj)
-    }
+      dispatch(googleAuth(googleData.tokenId))
 
-    const onFailure = (res) =>{
-
-      console.log('Login failure : ', res)
+      if(user.authSuccess === true){
+        sessionStorage.setItem('user_data', JSON.stringify(user.user))
+        sessionStorage.setItem('user_token', user.token)
+        navigate('/home')
+      }
     }
 
     if(authSuccess === true){
@@ -74,12 +81,16 @@ function Login() {
               <GoogleLogin
                 clientId={clientId}
                 buttonText="S'inscrire avec Google"
-                onSuccess={onSuccess}
-                onFailure={onFailure}
+                onSuccess={handleResponse}
+                onFailure={handleResponse}
                 cookiePolicy={"single_host_origin"}
-                isSignedIn={true}
+                isSignedIn={false}
               />
-
+               <GoogleLogout
+                  clientId={clientId}
+                  buttonText="Logout"
+                  onLogoutSuccess={()=>console.log('log out !')}
+                />
             </Stack>
             <h5 className="DividerStyle"><span>Déjà membre ?</span></h5>
             <Button 

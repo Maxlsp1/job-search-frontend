@@ -24,6 +24,14 @@ export const signUp = createAsyncThunk(
   }
 );
 
+export const googleAuth = createAsyncThunk(
+  "user/googleAuth",
+  async (token) => {
+    const res = await UserService.googleAuth(token);
+    return res.data;
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -46,6 +54,14 @@ const userSlice = createSlice({
         authSuccess: action.payload.authSuccess
       }
     },
+    [googleAuth.fulfilled]: (state, action) => {
+      return{
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+        authSuccess: action.payload.authSuccess
+      }
+    }
   },
 });
 const { reducer } = userSlice;

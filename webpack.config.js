@@ -19,16 +19,20 @@ module.exports = {
     },
     devtool: "source-map",
     devServer: {
-        allowedHosts: ['job-search-dev.nip.io', '.job-search-dev.nip.io'],
         port: 5000,
-        server: {
-            type: "https",
-            options: {
-                key: fs.readFileSync('cert.key'),
-                cert: fs.readFileSync('cert.crt'),
-                ca: fs.readFileSync('ca.crt'),
-            },
+        historyApiFallback: true,
+        allowedHosts: ['.loophole.site'],
+        client: {
+            webSocketURL: 'auto://job-search.loophole.site/ws'
         },
+        // server: {
+        //     type: "https",
+        //     options: {
+        //         key: fs.readFileSync('cert.key'),
+        //         cert: fs.readFileSync('cert.crt'),
+        //         ca: fs.readFileSync('ca.crt'),
+        //     },
+        // },
         static: {
             directory: path.join(__dirname, 'public'),
         },

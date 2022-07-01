@@ -5,12 +5,16 @@ const signIn = (data) => {
 }
 
 const signUp = (data) => {
-    console.log(data)
     return api.post('/auth/signup', data)
+}
+
+const googleAuth = (token) =>{
+  return api.post('/auth/googleAuth', token)
 }
 
 const UserService = {
   signIn,
-  signUp
+  signUp,
+  googleAuth
 };
 export default UserService;
