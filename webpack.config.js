@@ -7,8 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fs = require("fs");
 const CopyPlugin = require("copy-webpack-plugin");
 
-const devMode = process.env.NODE_ENV !== 'production';
-
 module.exports = {
 
     entry: './src/index.js',
@@ -21,18 +19,14 @@ module.exports = {
     devServer: {
         port: 5000,
         historyApiFallback: true,
-        allowedHosts: ['.loophole.site'],
-        client: {
-            webSocketURL: 'auto://job-search.loophole.site/ws'
+        server: {
+            type: "https",
+            options: {
+                key: fs.readFileSync('cert.key'),
+                cert: fs.readFileSync('cert.crt'),
+                ca: fs.readFileSync('ca.crt'),
+            },
         },
-        // server: {
-        //     type: "https",
-        //     options: {
-        //         key: fs.readFileSync('cert.key'),
-        //         cert: fs.readFileSync('cert.crt'),
-        //         ca: fs.readFileSync('ca.crt'),
-        //     },
-        // },
         static: {
             directory: path.join(__dirname, 'public'),
         },

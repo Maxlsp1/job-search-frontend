@@ -3,9 +3,9 @@ import axios from "axios";
 var env = process.env.NODE_ENV || 'development';
 let url = ''
 if(env === 'development'){
-  url = `https://job-search-api.loophole.site`
+  url = 'http://localhost:8000'
 } else {
-  url =  `https://projet.iut-tarbes.fr:8443`
+  url =  `https://some-url-in-443-port`
 }
 export default axios.create({
   baseURL: url

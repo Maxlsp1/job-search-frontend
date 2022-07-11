@@ -8,7 +8,7 @@ import { gapi } from 'gapi-script';
 import SignUp from "../components/Login/SignUp";
 import SignIn from "../components/Login/SignIn";
 
-const clientId = "685903966367-p4nn1bpkcisgenc4q26c3q7d0dfki1n0.apps.googleusercontent.com";
+const clientId = "google-api-secret";
 
 function Login() {
 
@@ -23,18 +23,26 @@ function Login() {
 
     useEffect(() =>{
 
-      function init(){
-        gapi.client.init({
-          client_id: clientId,
-          scope: ""
-        })
+      try {
+
+        function init(){
+          console.log('init google auth')
+          gapi.client.init({
+            client_id: clientId,
+            scope: ""
+          })
+        }
+        gapi.load('client:auth2', init)
+        
+      } catch (error) {
+        console.log('error in use effect : ', error)
       }
-      gapi.load('client:auth2', init)
     }, [])
 
-    const handleResponse = (googleData) =>{
+    const onSuccess = (res) =>{
+      console.log('google data : ', res)
 
-      dispatch(googleAuth(googleData.tokenId))
+      dispatch(googleAuth(res.tokenId))
 
       if(user.authSuccess === true){
         sessionStorage.setItem('user_data', JSON.stringify(user.user))
@@ -42,6 +50,11 @@ function Login() {
         navigate('/home')
       }
     }
+
+  const onFailure = (res) => {
+
+    console.log('error : ', res)
+  }
 
     if(authSuccess === true){
       return navigate('/home')
@@ -81,8 +94,8 @@ function Login() {
               <GoogleLogin
                 clientId={clientId}
                 buttonText="S'inscrire avec Google"
-                onSuccess={handleResponse}
-                onFailure={handleResponse}
+                onSuccess={onSuccess}
+                onFailure={onFailure}
                 cookiePolicy={"single_host_origin"}
                 isSignedIn={false}
               />
